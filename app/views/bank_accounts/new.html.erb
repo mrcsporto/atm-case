@@ -17,9 +17,19 @@
       <%= f.label :client_number%>
       <%= text_field_tag :client_number, @current_client.client_number, :class => 'form-control', disabled: true %>
     </div>
-  <% else %>
-    <%=f.error_span(:client_number) %>
+    <div class="field">
+      <%= f.label :client_number%>
+      <%= text_field_tag :full_name, @current_client.full_name, :class => 'form-control', disabled: true %>
+    </div>
+    <div class="field">
+      <%= f.label :cpf%>
+      <%= text_field_tag :cpf, @current_client.cpf, :class => 'form-control', disabled: true %>
+    </div>
+    <% else %>
+      <%=f.error_span(:client_number) %>
+    <% end %>
+      <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+      bank_accounts_path, :class => 'btn btn-default' %>
   <% end %>
-    <div class="actions"><%= f.submit "Create Account" %></div>
-<% end %>
 

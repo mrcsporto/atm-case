@@ -24,32 +24,6 @@ class BankAccountsController < ApplicationController
   end
 
   # POST /bank_accounts or /bank_accounts.json
-  # def create
-
-  # def create
-  #   # client = Client.find_by(client_number: params[:client_number])
-  #   @bank_account = BankAccount.new(bank_account_params)
-  #   @bank_account.save
-  #     #   # session[:client_id] = @bank_account.id
-  #     #   redirect_to root_url, notice: "Account Created"
-  #     # else
-  #     #   render "new"
-  #     # end
-  # end
-
-
-
-    # def create
-
-    #   # @client = Client.new(clients_params)
-    #   # if @client.save
-    #   #   session[:client_id] = @client.id
-    #   #   redirect_to root_url, notice: "Thank you for signing up"
-    #   # else
-    #   #   render "new"
-    #   # end
-    # end
-    
   def create
     client = Client.find(session[:client_id]) if session[:client_id]
     @bank_account = BankAccount.new(client_id: client.id)

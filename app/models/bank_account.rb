@@ -1,6 +1,5 @@
 class BankAccount < ApplicationRecord
-  # belongs_to :client, class_name: "Client", foreing_key: :client_id
-  belongs_to :client, class_name: "Client", foreign_key: :client_id
+  belongs_to :client
   
   has_many :account_transactions
 
