@@ -30,12 +30,12 @@
     </div>
     <div class="field">
       <%= f.label :account_number%>
-      <%= text_field_tag :account_number, @bank_account.account_number, :class => 'form-control', disabled: true %>
+      <%= text_field_tag :account_number, @bank_account.account_number, :class => 'form-control' %>
     </div>
       <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
       bank_accounts_path, :class => 'btn btn-default' %>
- <% else %>
+  <% elsif current_client.id === @bank_account.client.id%>
     <div class="field">
       <%= f.label :full_name%>
       <%= text_field_tag :full_name, @current_client.full_name, :class => 'form-control', disabled: true %>

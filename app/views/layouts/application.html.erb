@@ -25,9 +25,30 @@
           <ul class="nav navbar-nav pull-right">
            <% if current_client %>
               <li><%= link_to "Log Out", logout_path %></li>
+                <div class="dropdown show">
+                  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><%= link_to "Create Account", new_bank_account_path  %></li>
+                    <li><%= link_to "Accounts", bank_accounts_path  %></li>
+                    <li><%= link_to "Profile", edit_profile_path  %></li>
+                  </div>
+                </div>
+
             <% else %>
               <li><%= link_to "Sign Up", signup_path %></li>
               <li><%= link_to "Log In", login_path %></li>
+                <div class="dropdown show">
+                  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><%= link_to "Create Account", new_bank_account_path  %></li>
+                    <li><%= link_to "Accounts", bank_accounts_path  %></li>
+                    <li><%= link_to "Profile", edit_profile_path  %></li>
+                  </div>
+                </div>
             <% end %>
           </ul>
         </div>
@@ -35,20 +56,12 @@
     </div>
     <div class="container main">
       <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-12">
           <%= bootstrap_flash %>
           <%= yield %>
         </div><br>
-        <div class="col-lg-3 col-xs-4">
-          <div class="well sidebar-nav">
-            <h3>Menu</h3>
-            <ul class="nav nav-list">
-              <li><%= link_to "Create Account", new_bank_account_path  %></li>
-              <li><%= link_to "Accounts", bank_accounts_path  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+     
+        
       </div><!--/row-->
     </div> <!-- /container -->
     <div class="footer">

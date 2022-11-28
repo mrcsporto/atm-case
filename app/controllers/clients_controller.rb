@@ -1,7 +1,14 @@
 class ClientsController < ApplicationController
+  before_action :authorize, only: [:show, :edit, :update, :destroy]
+
   def new
     @client = Client.new
   end
+
+  def home
+    @clients = Client.all
+  end
+
   
   def create
     @client = Client.new(clients_params)

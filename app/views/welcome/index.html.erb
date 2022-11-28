@@ -5,7 +5,13 @@
     <% if current_client %>
       <h3>Number of Accounts: <%= BankAccount.where(client_id: current_client.id).pluck(:client_id).count %></h3><br>
     <% end %>
-  <%= link_to "Log Out", logout_path, :class => 'btn btn-default btn-md'%>
+  <%= link_to "Log Out", logout_path, :class => 'btn btn-primary btn-md'%>
 <% else %>
-  <h1>ATM Cash Machine</h1>
+  <div class="jumbotron">
+  <h1>ATM CASH BANK</h1><br>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+  incididunt ut labore et dolore magna aliqua.</p><br>
+   <%= link_to "Sign up", signup_path, :class => 'btn btn-primary btn-lg'%> 
+   <%= link_to "Log in", login_path, :class => 'btn btn-default btn-lg'%> 
+</div>
 <% end %>

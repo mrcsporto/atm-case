@@ -5,15 +5,16 @@ class Client < ApplicationRecord
   validates :cpf, presence: true, uniqueness: true
   validates :password, length: { in: 3..20 }
   validate :cpf_valid?
-
+  
   ROLES = %w[admin client]
-
+  
   has_secure_password
-    
+  
   has_many :bank_accounts
-
+  
   before_save :upcase_full_name
   before_validation :new_client
+  
   
   def upcase_full_name
     self.full_name = self.full_name.upcase
