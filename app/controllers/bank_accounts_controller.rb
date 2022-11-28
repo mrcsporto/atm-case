@@ -11,7 +11,6 @@ class BankAccountsController < ApplicationController
   # GET /bank_accounts/1 or /bank_accounts/1.json
   def show
     @bank_account = BankAccount.find(params[:id])
-  
   end
 
   # GET /bank_accounts/new

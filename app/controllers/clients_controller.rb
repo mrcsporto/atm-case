@@ -1,15 +1,18 @@
 class ClientsController < ApplicationController
-  before_action :authorize, only: [:show, :edit, :update, :destroy]
+  before_action :authorize, only: %i[ show edit update destroy ]
 
   def new
     @client = Client.new
   end
 
-  def home
+  def index
     @clients = Client.all
   end
 
-  
+  def show
+    @client = Client.find(params[:id])
+  end
+
   def create
     @client = Client.new(clients_params)
     if @client.save

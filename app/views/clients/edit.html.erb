@@ -23,48 +23,41 @@
             <th><%= model_class.human_attribute_name(:full_name) %></th>
             <th><%= model_class.human_attribute_name(:client_number) %></th>
             <th><%= model_class.human_attribute_name(:cpf) %></th>
+            <th><%= model_class.human_attribute_name(:role) %></th>
             <th><%= model_class.human_attribute_name(:created_at) %></th>
-            <th><%=t '.actions', :default => t("helpers.actions") %></th>
           </tr>
         </thead>
         <tbody>
-        <% @clients.each do |client| %>
-          <tr>
-          <td><%= link_to client.id, client_path(client) %></td>
-          </tr>
-        <% end %>
-        
-            
-        
-        
+          <% Client.all.each do |client| %>
+            <tr>
+              <td><%= client.id %></td>
+              <td><%= client.full_name %></td>
+              <td><%= client.client_number %></td>
+              <td><%= client.cpf %></td>
+              <td><%= client.role %></td>
+              <td><%= client.created_at %></td>     
+            </tr>
+          <% end %>
         </tbody>
     </table>
-
-   
-
-  <% else %>
-
+    
+  <% elsif current_client.role === "client"%>
       <div class="field">
       <%= f.label :full_name%>
-      <%= text_field_tag :full_name,current_client.full_name, :class => 'form-control' %>
+      <%= text_field_tag :full_name,current_client.full_name, disabled: true, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :client_number%>
-      <%= text_field_tag :client_number, current_client.client_number, :class => 'form-control'%>
+      <%= text_field_tag :client_number, current_client.client_number, disabled: true,  :class => 'form-control'%>
     </div>
     <div class="field">
       <%= f.label :cpf%>
-      <%= text_field_tag :cpf, current_client.cpf, :class => 'form-control'%>
+      <%= text_field_tag :cpf, current_client.cpf, disabled: true, :class => 'form-control'%>
     </div>
     <div class="field">
       <%= f.label :role%>
-      <%= text_field_tag :role, current_client.role, :class => 'form-control'%>
+      <%= text_field_tag :role, current_client.role, disabled: true, :class => 'form-control'%>
     </div>
-    
-      <%= f.submit nil, :class => 'btn btn-primary', disabled: true, data: { confirm: 'Are you sure?' } %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-      bank_accounts_path, :class => 'btn btn-default' %>
-
   <% end %>
 <% end %>
 
