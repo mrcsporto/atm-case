@@ -15,6 +15,6 @@ class ClientsController < ApplicationController
 
   private
   def clients_params
-    params.require(:client).permit(:full_name, :cpf, :password, :password_confirmation)
+    params.require(:client).permit(:full_name, :cpf, :password, :password_confirmation, :role)
   end
 end

@@ -5,7 +5,6 @@
 <table class="table table-hover arrow">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:client_number) %></th>
       <th><%= model_class.human_attribute_name(:full_name) %></th>
       <th><%= model_class.human_attribute_name(:account_number) %></th>
@@ -16,25 +15,26 @@
   </thead>
   <tbody>
     <% @bank_accounts.each do |bank_account| %>
-      <tr>
-        <td><%= link_to bank_account.id, bank_account_path(bank_account) %></td>
-        <td><%= bank_account.client.client_number %></td>
-        <td><%= bank_account.client.full_name %></td>
-        <td><%= bank_account.account_number %></td>
-        <td><%= bank_account.balance %></td>
-        <td><%=l bank_account.created_at %></td>
-        <td>
-          <%= link_to t('.show', :default => t("helpers.links.show")),
-                      bank_account_path(bank_account), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_bank_account_path(bank_account), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      bank_account_path(bank_account),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-        </td>
-      </tr>
+      <% if current_client.client_number === bank_account.client.client_number %>
+        <tr>
+          <td><%= link_to bank_account.client.client_number, bank_account_path(bank_account) %></td>
+          <td><%= bank_account.client.full_name %></td>
+          <td><%= bank_account.account_number %></td>
+          <td><%= bank_account.balance %></td>
+          <td><%=l bank_account.created_at %></td>
+          <td>
+            <%= link_to t('.show', :default => t("helpers.links.show")),
+                        bank_account_path(bank_account), :class => 'btn btn-default btn-xs' %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_bank_account_path(bank_account), :class => 'btn btn-default btn-xs' %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        bank_account_path(bank_account),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-xs btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

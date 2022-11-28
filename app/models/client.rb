@@ -6,6 +6,8 @@ class Client < ApplicationRecord
   validates :password, length: { in: 3..20 }
   validate :cpf_valid?
 
+  ROLES = %w[admin client]
+
   has_secure_password
     
   has_many :bank_accounts
@@ -20,11 +22,16 @@ class Client < ApplicationRecord
   def new_client
     if self.new_record?
       self.client_number = ((SecureRandom.random_number(9e5) + 1e5).to_i).to_s
+      self.role = "client"
     end
   end
 
   def cpf_valid?
     return if CPF.valid?(cpf)
     errors.add(:cpf)
+  end
+
+  def role_symbols
+    [role.to_sym]
   end
 end
