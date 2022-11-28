@@ -1,0 +1,34 @@
+<h1>Sign Up</h1>
+
+<%= form_for @client do |f| %>
+  <% if @client.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% @client.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name %>
+  </div>
+  <div class="field">
+    <label>CPF</label>
+    <%= f.text_field :cpf %>
+  </div>
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="actions"><%= f.submit "Sign Up" %></div>
+<% end %>
+
+

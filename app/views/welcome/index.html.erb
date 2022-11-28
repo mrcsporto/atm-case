@@ -1,0 +1,7 @@
+<% if current_client %>
+<h1>Welcome <%= current_client.full_name %></h1>
+<h2>Client Bank ID: <%= current_client.client_number %></h2>
+<h4><%= link_to "Log Out", session_path("current"), method: "delete"%></h4>
+<% else %>
+<h1>ATM Cash Machine</h1>
+<% end %>
