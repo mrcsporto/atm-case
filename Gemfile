@@ -31,7 +31,8 @@ gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 gem "cpf_cnpj"
 # Lib implemented in C that calculates and validates CPF using FFI.
 gem 'br-cpf', '~> 1.0', '>= 1.0.1'
-# Authorization Gem for Ruby on Rails.
+# Provides automatic session timeout in a Rails application.
+gem 'auto-session-timeout'
 
 # Protect attributes from mass-assignment in ActiveRecord models.
 # Use Active Storage variant

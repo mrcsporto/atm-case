@@ -62,6 +62,8 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    auto-session-timeout (0.9.9)
+      actionpack (>= 3.2, < 7.1)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.15.0)
@@ -233,6 +235,7 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  auto-session-timeout
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   br-cpf (~> 1.0, >= 1.0.1)
