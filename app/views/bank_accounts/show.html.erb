@@ -2,7 +2,7 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
-<% if current_client.client_number === @bank_account.client.client_number %>
+<% if current_client.id === @bank_account.client.id %>
   <dl class="dl-horizontal">
     <dt><strong><%= model_class.human_attribute_name (:client_id) %>:</strong></dt>
     <dd><%= @bank_account.client_id %></dd>
