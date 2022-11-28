@@ -1,7 +1,8 @@
 <% if current_client %>
-<h1>Welcome <%= current_client.full_name %></h1>
-<h2>Client Bank ID: <%= current_client.client_number %></h2>
-<h4><%= link_to "Log Out", session_path("current"), method: "delete"%></h4>
+  <h1>Welcome <%= current_client.full_name %></h1>
+  <h3>CPF: <%= current_client.cpf %></h3>
+  <h3>Client Bank ID: <%= current_client.client_number %></h3><br>
+  <%= link_to "Log Out", session_path("current"), method: "delete", :class => 'btn btn-default btn-md'%>
 <% else %>
-<h1>ATM Cash Machine</h1>
+  <h1>ATM Cash Machine</h1>
 <% end %>

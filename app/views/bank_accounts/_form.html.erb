@@ -16,12 +16,14 @@
   <% end %>
 
   <div class="form-group">
-  
-    <%= f.label :client_id, :class => 'control-label col-lg-2' %>
+  <% if current_client %>
+    <%= f.label :client_id, :class => 'control-label col-lg-2 pull-left' %>
     <div class="col-lg-10">
-      <%= f.text_field :client_id, :class => 'form-control' %>
+      <%= text_field_tag :client_number, @current_client.client_number, id: "input-recipient", :class => 'form-control', disabled: true %>
     </div>
+    <% else %>
     <%=f.error_span(:client_id) %>
+    <% end %>
   </div>
 
   <div class="form-group">

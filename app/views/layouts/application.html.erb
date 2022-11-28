@@ -28,10 +28,10 @@
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav pull-right">
            <% if current_client %>
-              <li><%= link_to "Log Out", session_path("current"), method: "delete"%></li>
+              <li><%= link_to "Log Out", logout_path %></li>
             <% else %>
-              <li><%= link_to "Sign Up", new_client_path %></li>
-              <li><%= link_to "Log In", new_session_path %></li>
+              <li><%= link_to "Sign Up", signup_path %></li>
+              <li><%= link_to "Log In", login_path %></li>
             <% end %>
           </ul>
         </div>
@@ -43,13 +43,13 @@
         <div class="col-lg-9">
           <%= bootstrap_flash %>
           <%= yield %>
-        </div>
-        <div class="col-lg-3">
+        </div><br>
+        <div class="col-lg-3 col-xs-4">
           <div class="well sidebar-nav">
-            <h3>Sidebar</h3>
+            <h3>Menu</h3>
             <ul class="nav nav-list">
-              <li><%= link_to "Open an Account", new_bank_account_path  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
+              <li><%= link_to "Create Account", new_bank_account_path  %></li>
+              <li><%= link_to "Accounts", bank_accounts_path  %></li>
               <li><%= link_to "Link3", "/path3"  %></li>
             </ul>
           </div><!--/.well -->

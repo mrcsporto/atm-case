@@ -1,5 +1,25 @@
-<%- model_class = BankAccount -%>
-<div class="page-header">
-  <h1>Create an Bank Account</h1>
-</div>
-<%= render :partial => 'form' %>
+<h1>Create an Bank Account</h1>
+
+<%= form_for @bank_account do |f| %>
+  <% if @bank_account.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% @bank_account.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_client %>
+    <div class="field">
+      <%= f.label :client_number%>
+      <%= text_field_tag :client_number, @current_client.client_number, :class => 'form-control', disabled: true %>
+    </div>
+  <% else %>
+    <%=f.error_span(:client_number) %>
+  <% end %>
+    <div class="actions"><%= f.submit "Create Account" %></div>
+<% end %>
+

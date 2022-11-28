@@ -1,5 +1,7 @@
 class BankAccountsController < ApplicationController
   before_action :set_bank_account, only: %i[ show edit update destroy ]
+  before_action :set_client, only: %i[ show edit update destroy ]
+  before_action :authorize, expect: %i[show]
 
   # GET /bank_accounts or /bank_accounts.json
   def index
@@ -22,8 +24,35 @@ class BankAccountsController < ApplicationController
   end
 
   # POST /bank_accounts or /bank_accounts.json
+  # def create
+
+  # def create
+  #   # client = Client.find_by(client_number: params[:client_number])
+  #   @bank_account = BankAccount.new(bank_account_params)
+  #   @bank_account.save
+  #     #   # session[:client_id] = @bank_account.id
+  #     #   redirect_to root_url, notice: "Account Created"
+  #     # else
+  #     #   render "new"
+  #     # end
+  # end
+
+
+
+    # def create
+
+    #   # @client = Client.new(clients_params)
+    #   # if @client.save
+    #   #   session[:client_id] = @client.id
+    #   #   redirect_to root_url, notice: "Thank you for signing up"
+    #   # else
+    #   #   render "new"
+    #   # end
+    # end
+    
   def create
-    @bank_account = BankAccount.new(bank_account_params)
+    client = Client.find(session[:client_id]) if session[:client_id]
+    @bank_account = BankAccount.new(client_id: client.id)
 
     respond_to do |format|
       if @bank_account.save
@@ -60,6 +89,13 @@ class BankAccountsController < ApplicationController
   end
 
   private
+    def set_client
+      if params[:client_id]
+        @client = Client.find(params[:client_id])
+      else
+        @client = Client.all
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_bank_account
       @bank_account = BankAccount.find(params[:id])
@@ -67,6 +103,6 @@ class BankAccountsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def bank_account_params
-      params.require(:bank_account).permit(:client_id, :balance, :account_number)
+      params.require(:bank_account).permit(:client_id)
     end
 end
