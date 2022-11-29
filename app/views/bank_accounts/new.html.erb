@@ -12,7 +12,7 @@
     </div>
   <% end %>
 
-  <% if current_user %>
+  <% if current_user.role === "client" %>
     <div class="field">
       <%= f.label :client_number%>
       <%= text_field_tag :client_number, @current_user.client_number, :class => 'form-control', disabled: true %>
@@ -21,11 +21,19 @@
       <%= f.label :cpf%>
       <%= text_field_tag :cpf, @current_user.cpf, :class => 'form-control', disabled: true %>
     </div>
-    <% else %>
-      <%=f.error_span(:client_number) %>
-    <% end %>
-      <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-      bank_accounts_path, :class => 'btn btn-default' %>
+        <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+        bank_accounts_path, :class => 'btn btn-default' %>
+
+  <% elsif current_user.role === "admin"%>    
+    <div class="field">
+      <%= f.label :client_id, :class => 'control-label' %>
+      <%= f.select :client_id, Client.all.pluck(:full_name, :id).sort, {:include_blank => "Select Client"}, :class => 'form-control' %>
+    </div>
+        <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+        bank_accounts_path, :class => 'btn btn-default' %>  
   <% end %>
+<% end %>
+
 

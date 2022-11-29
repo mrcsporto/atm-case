@@ -25,7 +25,11 @@ class BankAccountsController < ApplicationController
   # POST /bank_accounts or /bank_accounts.json
   def create
     client = Client.find(session[:client_id]) if session[:client_id]
-    @bank_account = BankAccount.new(client_id: client.id)
+    if client.role === "admin"
+      @bank_account = BankAccount.new(bank_account_params)
+    else
+      @bank_account = BankAccount.new(client_id: client.id)
+    end
 
     respond_to do |format|
       if @bank_account.save
