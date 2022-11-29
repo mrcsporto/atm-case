@@ -18,7 +18,7 @@ class AccountTransaction < ApplicationRecord
   end
 
   def set_amount
-    amount.to_f
+    self.amount.to_f
   end
 
   def transaction_uniq_id
