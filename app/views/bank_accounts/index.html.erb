@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% @bank_accounts.each do |bank_account| %>
-      <% if current_client.id === bank_account.client.id %>
+      <% if current_user.id === bank_account.client.id %>
         <tr>
           <td><%= link_to bank_account.client.client_number, bank_account_path(bank_account) %></td>
           <td><%= bank_account.client.full_name %></td>
@@ -34,7 +34,7 @@
                         :class => 'btn btn-xs btn-danger' %>
           </td>
         </tr>
-        <% elsif current_client.role === "admin"  %>
+        <% elsif current_user.role === "admin"  %>
          <tr>
           <td><%= link_to bank_account.client.client_number, bank_account_path(bank_account) %></td>
           <td><%= bank_account.client.full_name %></td>

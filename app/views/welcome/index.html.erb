@@ -1,9 +1,9 @@
-<% if current_client %>
-  <h1>Client: <%= current_client.full_name %></h1>
-  <h3>CPF: <%= current_client.cpf %></h3>
-  <h3>Client Bank ID: <%= current_client.client_number %></h3><br>
-    <% if current_client %>
-      <h3>Number of Accounts: <%= BankAccount.where(client_id: current_client.id).pluck(:client_id).count %></h3><br>
+<% if current_user %>
+  <h1>Client: <%= current_user.full_name %></h1>
+  <h3>CPF: <%= current_user.cpf %></h3>
+  <h3>Client Bank ID: <%= current_user.client_number %></h3><br>
+    <% if current_user %>
+      <h3>Number of Accounts: <%= BankAccount.where(client_id: current_user.id).pluck(:client_id).count %></h3><br>
     <% end %>
   <%= link_to "Log Out", logout_path, :class => 'btn btn-primary btn-md'%>
 <% else %>

@@ -13,6 +13,9 @@
 
   </head>
   <body>
+  <% if current_user %>
+    <%= auto_session_timeout_js %>
+    <% end %>
     <div class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -23,7 +26,7 @@
         <a class="navbar-brand" href="/">Bank</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav pull-right">
-           <% if current_client %>
+           <% if current_user %>
               <li><%= link_to "Log Out", logout_path %></li>
                 <div class="dropdown show">
                   <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

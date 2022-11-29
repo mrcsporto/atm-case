@@ -12,14 +12,14 @@
     </div>
   <% end %>
 
-  <% if current_client %>
+  <% if current_user %>
     <div class="field">
       <%= f.label :client_number%>
-      <%= text_field_tag :client_number, @current_client.client_number, :class => 'form-control', disabled: true %>
+      <%= text_field_tag :client_number, @current_user.client_number, :class => 'form-control', disabled: true %>
     </div>
     <div class="field">
       <%= f.label :cpf%>
-      <%= text_field_tag :cpf, @current_client.cpf, :class => 'form-control', disabled: true %>
+      <%= text_field_tag :cpf, @current_user.cpf, :class => 'form-control', disabled: true %>
     </div>
     <% else %>
       <%=f.error_span(:client_number) %>
