@@ -1,0 +1,33 @@
+<h1>Create an Transaction</h1>
+
+<%= form_for @account_transaction do |f| %>
+  <% if @account_transaction.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% @account_transaction.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if current_user.role == "client" %>
+    <div class="field">
+      <%= f.label :transaction_type%>
+      <%= f.select :transaction_type, AccountTransaction::TRANSACTION_TYPES, {:include_blank => "Select Transaction"}, :class => 'form-control' %>
+    </div>
+    <div class="field">
+      <%= f.label :bank_account_id%>
+      <%= f.select :bank_account_id, current_user.bank_accounts.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select your account"}, :class => 'form-control' %>
+    </div>
+     <div class="field">
+      <%= f.label :amount %>
+      <%= f.number_field :amount, step: 0.01, :class => 'form-control'%>
+    </div>
+ 
+        <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+        account_transactions_path, :class => 'btn btn-default' %>  
+  <% end %>
+<% end %>
+
