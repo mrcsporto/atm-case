@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'signup', to: 'clients#new', as: 'signup'
-  get 'edit_profile', to: 'clients#edit', as: 'edit_profile'
+  get 'profile', to: 'clients#show', as: 'profile'
   get "active",  to: "sessions#active"
   get "timeout", to: "sessions#timeout"
   

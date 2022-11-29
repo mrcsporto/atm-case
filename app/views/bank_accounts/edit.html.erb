@@ -17,16 +17,20 @@
 
   <% if current_user.role === "admin" %>
     <div class="field">
+      <%= f.label :id%>
+      <%= text_field_tag :full_name, @bank_account.client_id, disabled: true, :class => 'form-control' %>
+    </div>
+    <div class="field">
       <%= f.label :full_name%>
-      <%= text_field_tag :full_name, @bank_account.client.full_name, :class => 'form-control' %>
+      <%= text_field_tag :full_name, @bank_account.client.full_name, disabled: true, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :client_number%>
-      <%= text_field_tag :client_number, @bank_account.client.client_number, :class => 'form-control'%>
+      <%= text_field_tag :client_number, @bank_account.client.client_number, disabled: true, :class => 'form-control'%>
     </div>
     <div class="field">
       <%= f.label :balance%>
-      <%= text_field_tag :balance, @bank_account.balance, :class => 'form-control', disabled: true %>
+      <%= text_field_tag :balance, @bank_account.balance, disabled: true, :class => 'form-control' %>
     </div>
     <div class="field">
       <%= f.label :account_number%>

@@ -1,7 +1,7 @@
 class Client < ApplicationRecord
   validates :full_name, format: { with: /\A[\p{Latin}\s-]{2,50}\z/i,
     message: "only allows letters" }
-  validates :client_number, presence: true, uniqueness: true
+  validates :client_number, presence: true, uniqueness: true, length: { is: 6 }
   validates :cpf, presence: true, uniqueness: true
   validates :password, length: { in: 3..20 }
   validate :cpf_valid?

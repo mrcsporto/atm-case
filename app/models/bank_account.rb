@@ -4,7 +4,7 @@ class BankAccount < ApplicationRecord
   has_many :account_transactions
 
   validates :client, presence: true
-  validates :account_number, presence: true, uniqueness: true
+  validates :account_number, presence: true, uniqueness: true, length: { is: 6 }
   validates :balance, presence: true,  numericality: {greater_than_or_equal_to: 0}
 
   before_validation :new_account

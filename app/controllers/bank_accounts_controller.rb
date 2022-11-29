@@ -30,7 +30,6 @@ class BankAccountsController < ApplicationController
     else
       @bank_account = BankAccount.new(client_id: client.id)
     end
-
     respond_to do |format|
       if @bank_account.save
         format.html { redirect_to bank_account_url(@bank_account), notice: "Bank account was successfully created." }
@@ -80,6 +79,6 @@ class BankAccountsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def bank_account_params
-      params.require(:bank_account).permit(:client_id)
+      params.permit(:client_id, :balance, :account_number)
     end
 end

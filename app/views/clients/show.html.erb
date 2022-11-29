@@ -52,16 +52,16 @@
     </div>
     <div class="field">
       <%= f.label :client_number%>
-      <%= text_field_tag :client_number, current_user.client_number, disabled: true,  :class => 'form-control'%>
+      <%= text_field_tag :client_number, current_user.client_number, disabled: true, :class => 'form-control'%>
     </div>
     <div class="field">
       <%= f.label :cpf%>
       <%= text_field_tag :cpf, current_user.cpf, disabled: true, :class => 'form-control'%>
     </div>
-    <div class="field">
-      <%= f.label :role%>
-      <%= text_field_tag :role, current_user.role, disabled: true, :class => 'form-control'%>
-    </div>
+     
+        <%= link_to t('.return', :default => t("helpers.links.return")),
+        root_path, :class => 'btn btn-default' %>
+
   <% end %>
 <% end %>
 
