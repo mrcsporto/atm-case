@@ -16,8 +16,8 @@
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
-    <% else %>
-     <thead>
+  <% else %>
+    <thead>
         <tr>
           <th><%= model_class.human_attribute_name(:client_number) %></th>
           <th><%= model_class.human_attribute_name(:full_name) %></th>
@@ -28,7 +28,7 @@
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
-    <% end %>
+  <% end %>
 
   <tbody>
    <% @bank_accounts.each do |bank_account| %>

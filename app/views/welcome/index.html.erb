@@ -4,7 +4,7 @@
   <h3>Client Bank ID: <%= current_user.client_number %></h3><br>
 
     <% if current_user.role === "admin" %>
-      <h3>Number Clients Accounts: <%= BankAccount.all.count %></h3>
+      <h3>Active Client Accounts: <%= BankAccount.all.count %></h3>
       <h3>Deleted Accounts: <%= BankAccount.where.not(discarded_at: nil).count %></h3><br>
     <% else %>
       <h3>Number of Accounts: <%= BankAccount.where(client_id: current_user.id).where(discarded_at: nil).pluck(:client_id).count   %></h3><br>
