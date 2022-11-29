@@ -33,13 +33,13 @@ class AccountTransactionsController < ApplicationController
   private
 
   def set_bank_account
-    @bank_account = if params[:bank_account_id]
-                      BankAccount.find(params[:bank_account_id])
-                    else
-                      BankAccount.all
-                    end
+    if params[:bank_account_id]
+      BankAccount.find(params[:bank_account_id])
+    else
+      BankAccount.all
+    end
   end
-
+  
   # Use callbacks to share common setup or constraints between actions.
   def set_account_transaction
     @account_transaction = AccountTransaction.find(params[:id])
