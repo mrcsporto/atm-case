@@ -5,7 +5,12 @@ class BankAccountsController < ApplicationController
 
   # GET /bank_accounts or /bank_accounts.json
   def index
-    @bank_accounts = BankAccount.all
+    client = Client.find(session[:client_id]) if session[:client_id]
+      if client.role === "admin"
+        @bank_accounts = BankAccount.all
+      else
+        @bank_accounts = BankAccount.kept
+      end
   end
 
   # GET /bank_accounts/1 or /bank_accounts/1.json
@@ -44,7 +49,7 @@ class BankAccountsController < ApplicationController
   # PATCH/PUT /bank_accounts/1 or /bank_accounts/1.json
   def update
     respond_to do |format|
-      if @bank_account.update(bank_account_params)
+      if @bank_account.update(bank_account_edit_params)
         format.html { redirect_to bank_account_url(@bank_account), notice: "Bank account was successfully updated." }
         format.json { render :show, status: :ok, location: @bank_account }
       else
@@ -56,10 +61,10 @@ class BankAccountsController < ApplicationController
 
   # DELETE /bank_accounts/1 or /bank_accounts/1.json
   def destroy
-    @bank_account.destroy
+    @bank_account.discard
 
     respond_to do |format|
-      format.html { redirect_to bank_accounts_url, notice: "Bank account was successfully destroyed." }
+      format.html { redirect_to bank_accounts_url, notice: "Bank account was successfully archived." }
       format.json { head :no_content }
     end
   end
@@ -80,5 +85,8 @@ class BankAccountsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def bank_account_params
       params.require(:bank_account).permit(:client_id, :balance, :account_number)
+    end
+    def bank_account_edit_params
+      params.permit(:client_id, :balance, :account_number)
     end
 end

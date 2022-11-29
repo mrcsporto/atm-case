@@ -33,7 +33,8 @@ gem "cpf_cnpj"
 gem 'br-cpf', '~> 1.0', '>= 1.0.1'
 # Provides automatic session timeout in a Rails application.
 gem 'auto-session-timeout'
-
+# Soft deletes for ActiveRecord done right
+gem 'discard', '~> 1.2'
 # Protect attributes from mass-assignment in ActiveRecord models.
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

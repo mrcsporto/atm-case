@@ -3,19 +3,36 @@
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 <table class="table table-hover arrow">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:client_number) %></th>
-      <th><%= model_class.human_attribute_name(:full_name) %></th>
-      <th><%= model_class.human_attribute_name(:account_number) %></th>
-      <th><%= model_class.human_attribute_name(:balance) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
+ 
+
+  <% if current_user.role === "client"  %>
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:client_number) %></th>
+        <th><%= model_class.human_attribute_name(:full_name) %></th>
+        <th><%= model_class.human_attribute_name(:account_number) %></th>
+        <th><%= model_class.human_attribute_name(:balance) %></th>
+        <th><%= model_class.human_attribute_name(:created_at) %></th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <% else %>
+     <thead>
+        <tr>
+          <th><%= model_class.human_attribute_name(:client_number) %></th>
+          <th><%= model_class.human_attribute_name(:full_name) %></th>
+          <th><%= model_class.human_attribute_name(:account_number) %></th>
+          <th><%= model_class.human_attribute_name(:balance) %></th>
+          <th>Deleted?</th>
+          <th><%= model_class.human_attribute_name(:created_at) %></th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+      </thead>
+    <% end %>
+
   <tbody>
-    <% @bank_accounts.each do |bank_account| %>
-      <% if current_user.id === bank_account.client.id %>
+   <% @bank_accounts.each do |bank_account| %>
+    <% if current_user.id === bank_account.client.id %>
         <tr>
           <td><%= link_to bank_account.client.client_number, bank_account_path(bank_account) %></td>
           <td><%= bank_account.client.full_name %></td>
@@ -34,12 +51,15 @@
                         :class => 'btn btn-xs btn-danger' %>
           </td>
         </tr>
+    </tbody>
         <% elsif current_user.role === "admin"  %>
+      <tbody>
          <tr>
           <td><%= link_to bank_account.client.client_number, bank_account_path(bank_account) %></td>
           <td><%= bank_account.client.full_name %></td>
           <td><%= bank_account.account_number %></td>
           <td><%= bank_account.balance %></td>
+          <td><%= bank_account.discarded? ? '✔️' : '' %></td>
           <td><%=l bank_account.created_at %></td>
           <td>
             <%= link_to t('.show', :default => t("helpers.links.show")),
@@ -53,9 +73,10 @@
                         :class => 'btn btn-xs btn-danger' %>
           </td>
         </tr>
+        </tbody>
       <% end %>
     <% end %>
-  </tbody>
+
 </table>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),

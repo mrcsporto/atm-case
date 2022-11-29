@@ -9,6 +9,8 @@ class BankAccount < ApplicationRecord
 
   before_validation :new_account
 
+  include Discard::Model
+
   def new_account
     if self.new_record?
       self.balance = 0.00
