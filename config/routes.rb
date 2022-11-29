@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'signup', to: 'clients#new', as: 'signup'
   get 'profile', to: 'clients#show', as: 'profile'
+  get 'transactions', to: 'account_transactions#index', as: 'transactions'
   get "active",  to: "sessions#active"
   get "timeout", to: "sessions#timeout"
   
