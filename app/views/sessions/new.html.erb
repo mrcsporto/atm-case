@@ -3,7 +3,7 @@
 <%= form_tag sessions_path do %>
   <div class="field">
     <label>CPF</label>
-    <%= text_field_tag :cpf, params[:cpf] %>
+    <%= text_field_tag :cpf, params[:cpf], autofocus: true %>
   </div>
   <div class="field">
     <%= label_tag :password %>
