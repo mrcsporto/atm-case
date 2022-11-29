@@ -14,6 +14,7 @@ class Client < ApplicationRecord
   
   before_save :upcase_full_name
   before_validation :new_client
+  before_create :first_user_admin
   
   
   def upcase_full_name
@@ -25,6 +26,10 @@ class Client < ApplicationRecord
       self.client_number = ((SecureRandom.random_number(9e5) + 1e5).to_i).to_s
       self.role = "client"
     end
+  end
+
+  def first_user_admin
+    self.role = "admin" if Client.count == 0
   end
 
   def cpf_valid?
