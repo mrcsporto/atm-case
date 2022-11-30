@@ -78,6 +78,6 @@ class BankAccountsController < ApplicationController
   end
 
   def bank_account_edit_params
-    params.permit(:client_id, :full_name, :balance, :account_number)
+    params.permit(:client_id, :balance, :account_number)
   end
 end
