@@ -37,6 +37,8 @@ gem 'auto-session-timeout'
 gem 'discard', '~> 1.2'
 # Interactor provides a common interface for performing complex user interactions.
 gem "interactor", "~> 3.0"
+# A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Ruby webapps
+gem 'kaminari'
 
 # Protect attributes from mass-assignment in ActiveRecord models.
 # Use Active Storage variant
