@@ -8,6 +8,8 @@ class BankAccount < ApplicationRecord
                       format: { with: /\A\d{1,3}(\.\d{1,2})?\z/ }
 
   before_validation :new_account
+  
+  paginates_per 10
 
   include Discard::Model
 
