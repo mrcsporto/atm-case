@@ -14,7 +14,7 @@
         </ul>
       </div>
     <% end %>
-    <% if current_user.role == "client" %>
+     <% if current_user.role == "client"  %>
       <div class="field">
         <%= f.label :transaction_type%>
         <%= f.select :transaction_type, AccountTransaction::TRANSACTION_TYPES, {:include_blank => "Select Transaction"}, :class => 'form-control' %>
@@ -22,6 +22,10 @@
       <div class="field">
         <%= f.label :bank_account_id%>
         <%= f.select :bank_account_id, current_user.bank_accounts.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select your account"}, :class => 'form-control' %>
+      </div>
+      <div class="field">
+        <%= f.label :receiver_id%>
+        <%= f.select :receiver_id, BankAccount.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select an account you want transfer"}, :class => 'form-control' %>
       </div>
       <div class="field">
         <%= f.label :amount %>

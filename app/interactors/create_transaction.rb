@@ -2,18 +2,20 @@ class CreateTransaction
   include Interactor
 
   def call
-    account = context.params[:bank_account_id].to_i
-    amount = context.params[:amount].to_f
     transaction_type = context.params[:transaction_type]
-    balance = BankAccount.find(account).balance.to_f
-    bank_account = BankAccount.find(account).id
+    bank_account = BankAccount.find(context.params[:bank_account_id]).id
+    amount = context.params[:amount].to_f
+    balance = BankAccount.find(context.params[:bank_account_id]).balance.to_f
 
-    discardaaa
     context.account_transaction = AccountTransaction.create(context.params)
 
-    BankAccount.update(bank_account, balance: balance - amount) if transaction_type.to_s == 'Withdraw'
-    BankAccount.update(bank_account, balance: balance + amount) if transaction_type.to_s == 'Deposit'
-
-
+    if transaction_type == 'Transfer'
+      receiver_account = BankAccount.find(context.params[:receiver_id]).id
+      BankAccount.update(bank_account, balance: balance - amount)
+      BankAccount.update(receiver_account, balance: balance + amount)
+    else
+      BankAccount.update(bank_account, balance: balance - amount) if transaction_type == 'Withdraw'
+      BankAccount.update(bank_account, balance: balance + amount) if transaction_type == 'Deposit'
+    end
   end
 end

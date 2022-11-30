@@ -8,11 +8,12 @@ class AccountTransaction < ApplicationRecord
                      format: { with: /\A\d{1,3}(\.\d{1,2})?\z/ }
   validates :transaction_type, presence: true, inclusion: { in: TRANSACTION_TYPES }
   validates :transaction_number, presence: true, uniqueness: true
-  
+  # validates :receiver_id, presence: true, if: -> { (transaction_type.eql? 'Transfer') }
+
   before_validation :transaction_uniq_id
   before_save :upcase_transaction_type
   before_save :set_amount
- 
+
   def upcase_transaction_type
     self.transaction_type = transaction_type.upcase
   end
@@ -24,5 +25,5 @@ class AccountTransaction < ApplicationRecord
   def transaction_uniq_id
     self.transaction_number = SecureRandom.uuid if new_record?
   end
-  
+
 end
