@@ -1,5 +1,39 @@
-<%- model_class = BankAccount -%>
-<div class="page-header">
-  <h1>Create an Bank Account</h1>
-</div>
-<%= render :partial => 'form' %>
+<h1>Create an Bank Account</h1>
+
+<%= form_for @bank_account do |f| %>
+  <% if @bank_account.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% @bank_account.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_user.role == "client" %>
+    <div class="field">
+      <%= f.label :client_number%>
+      <%= text_field_tag :client_number, @current_user.client_number, :class => 'form-control', disabled: true %>
+    </div>
+    <div class="field">
+      <%= f.label :cpf%>
+      <%= text_field_tag :cpf, @current_user.cpf, :class => 'form-control', disabled: true %>
+    </div>
+        <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+        bank_accounts_path, :class => 'btn btn-default' %>
+
+  <% elsif current_user.role == "admin"%>    
+    <div class="field">
+      <%= f.label :client_id, :class => 'control-label' %>
+      <%= f.select :client_id, Client.all.pluck(:full_name, :id).sort, {:include_blank => "Select Client"}, :class => 'form-control' %>
+    </div>
+        <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+        bank_accounts_path, :class => 'btn btn-default' %>  
+  <% end %>
+<% end %>
+
+

@@ -2,4 +2,66 @@
 <div class="page-header">
   <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
 </div>
-<%= render :partial => 'form' %>
+
+<%= form_for @bank_account do |f| %>
+  <% if @bank_account.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% @bank_account.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_user.role == "admin" %>
+    <div class="field">
+      <%= f.label :id%>
+      <%= text_field_tag :full_name, @bank_account.client_id, disabled: true, :class => 'form-control' %>
+    </div>
+    <div class="field">
+      <%= f.label :full_name%>
+      <%= text_field_tag :full_name, @bank_account.client.full_name, disabled: true, :class => 'form-control' %>
+    </div>
+    <div class="field">
+      <%= f.label :client_number%>
+      <%= text_field_tag :client_number, @bank_account.client.client_number, disabled: true, :class => 'form-control'%>
+    </div>
+    <div class="field">
+      <%= f.label :balance%>
+      <%= text_field_tag :balance, @bank_account.balance, disabled: true, :class => 'form-control' %>
+    </div>
+    <div class="field">
+      <%= f.label :account_number%>
+      <%= text_field_tag :account_number, @bank_account.account_number, :class => 'form-control' %>
+    </div>
+      <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+      bank_accounts_path, :class => 'btn btn-default' %>
+      
+  <% elsif current_user.id == @bank_account.client.id%>
+    <div class="field">
+      <%= f.label :full_name%>
+      <%= text_field_tag :full_name, @current_user.full_name, :class => 'form-control', disabled: true %>
+    </div>
+    <div class="field">
+      <%= f.label :client_number%>
+      <%= text_field_tag :client_number, @current_user.client_number, :class => 'form-control', disabled: true%>
+    </div>
+    <div class="field">
+      <%= f.label :balance%>
+      <%= text_field_tag :balance, @bank_account.balance, :class => 'form-control', disabled: true %>
+    </div>
+    <div class="field">
+      <%= f.label :account_number%>
+      <%= text_field_tag :account_number, @bank_account.account_number, :class => 'form-control', disabled: true %>
+    </div>
+      <%= f.submit nil, :class => 'btn btn-primary', disabled: true, data: { confirm: 'Are you sure?' } %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+      bank_accounts_path, :class => 'btn btn-default' %>
+  <% end %>
+<% end %>
+
+
+

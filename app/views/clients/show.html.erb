@@ -1,0 +1,71 @@
+<%- model_class = Client -%>
+<div class="page-header">
+<% if current_user.role == "admin" %>
+  <h1>Client Profiles</h1>
+  <% else %>
+  <h1>Client Profiles</h1>
+  <% end %>
+</div>
+
+<%= form_for current_user do |f| %>
+  <% if current_user.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% current_user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_user.role == "admin" %>
+    <table class="table table-hover arrow">
+      <thead>
+          <tr>
+            <th><%= model_class.human_attribute_name(:id) %></th>
+            <th><%= model_class.human_attribute_name(:full_name) %></th>
+            <th><%= model_class.human_attribute_name(:client_number) %></th>
+            <th><%= model_class.human_attribute_name(:cpf) %></th>
+            <th><%= model_class.human_attribute_name(:role) %></th>
+            <th><%= model_class.human_attribute_name(:created_at) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Client.all.each do |client| %>
+            <tr>
+              <td><%= client.id %></td>
+              <td><%= client.full_name %></td>
+              <td><%= client.client_number %></td>
+              <td><%= client.cpf %></td>
+              <td><%= client.role %></td>
+              <td><%= client.created_at %></td>     
+            </tr>
+          <% end %>
+        </tbody>
+    </table>
+
+  <% elsif current_user.role == "client"%>
+      <div class="field">
+      <%= f.label :full_name%>
+      <%= text_field_tag :full_name,current_user.full_name, disabled: true, :class => 'form-control' %>
+    </div>
+    <div class="field">
+      <%= f.label :client_number%>
+      <%= text_field_tag :client_number, current_user.client_number, disabled: true, :class => 'form-control'%>
+    </div>
+    <div class="field">
+      <%= f.label :cpf%>
+      <%= text_field_tag :cpf, current_user.cpf, disabled: true, :class => 'form-control'%>
+    </div>
+     
+        <%= link_to t('.return', :default => t("helpers.links.return")),
+        root_path, :class => 'btn btn-default' %>
+
+  <% end %>
+<% end %>
+
+
+
+
+

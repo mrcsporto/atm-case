@@ -1,72 +1,66 @@
 class BankAccountsController < ApplicationController
-  before_action :set_bank_account, only: %i[ show edit update destroy ]
+  before_action :set_bank_account, only: %i[show edit update destroy]
+  before_action :set_client, only: %i[show edit update destroy]
+  before_action :authorize, expect: %i[show]
 
-  # GET /bank_accounts or /bank_accounts.json
   def index
-    @bank_accounts = BankAccount.all
+    client = Client.find(session[:client_id]) if session[:client_id]
+    @bank_accounts = BankAccount.all if client.role == 'admin'
+    @bank_accounts = BankAccount.kept if client.role == 'client'
+    @bank_accounts = BankAccount.order(:id).page params[:page]
   end
 
-  # GET /bank_accounts/1 or /bank_accounts/1.json
   def show
     @bank_account = BankAccount.find(params[:id])
-  
   end
 
-  # GET /bank_accounts/new
   def new
     @bank_account = BankAccount.new
   end
 
-  # GET /bank_accounts/1/edit
-  def edit
-  end
-
-  # POST /bank_accounts or /bank_accounts.json
   def create
-    @bank_account = BankAccount.new(bank_account_params)
-
-    respond_to do |format|
-      if @bank_account.save
-        format.html { redirect_to bank_account_url(@bank_account), notice: "Bank account was successfully created." }
-        format.json { render :show, status: :created, location: @bank_account }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @bank_account.errors, status: :unprocessable_entity }
-      end
+    client = Client.find(session[:client_id]) if session[:client_id]
+    @bank_account = BankAccount.new(bank_account_params) if client.role == 'admin'
+    @bank_account = BankAccount.new(client_id: client.id) if client.role == 'client'
+    if @bank_account.save
+      redirect_to bank_account_url(@bank_account), notice: 'Bank account was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /bank_accounts/1 or /bank_accounts/1.json
   def update
-    respond_to do |format|
-      if @bank_account.update(bank_account_params)
-        format.html { redirect_to bank_account_url(@bank_account), notice: "Bank account was successfully updated." }
-        format.json { render :show, status: :ok, location: @bank_account }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @bank_account.errors, status: :unprocessable_entity }
-      end
+    if @bank_account.update(bank_account_edit_params)
+      redirect_to bank_account_url(@bank_account), notice: 'Bank account was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /bank_accounts/1 or /bank_accounts/1.json
   def destroy
-    @bank_account.destroy
-
-    respond_to do |format|
-      format.html { redirect_to bank_accounts_url, notice: "Bank account was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    @bank_account.discard
+    redirect_to bank_accounts_url, notice: 'Bank account was successfully archived.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bank_account
-      @bank_account = BankAccount.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def bank_account_params
-      params.require(:bank_account).permit(:client_id, :balance, :account_number)
+  def set_client
+    if params[:client_id]
+      Client.find(params[:client_id])
+    else
+      Client.all
     end
+  end
+
+  def set_bank_account
+    @bank_account = BankAccount.find(params[:id])
+  end
+
+  def bank_account_params
+    params.require(:bank_account).permit(:client_id, :balance, :account_number)
+  end
+
+  def bank_account_edit_params
+    params.permit(:client_id, :balance, :account_number)
+  end
 end

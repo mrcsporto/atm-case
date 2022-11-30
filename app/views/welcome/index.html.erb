@@ -1,7 +1,22 @@
-<% if current_client %>
-<h1>Welcome <%= current_client.full_name %></h1>
-<h2>Client Bank ID: <%= current_client.client_number %></h2>
-<h4><%= link_to "Log Out", session_path("current"), method: "delete"%></h4>
+<% if current_user %>
+  <h1>Client: <%= current_user.full_name %></h1>
+  <h3>CPF: <%= current_user.cpf %></h3>
+  <h3>Client Bank ID: <%= current_user.client_number %></h3><br>
+
+    <% if current_user.role == "admin" %>
+      <h3>Active Client Accounts: <%= BankAccount.all.count %></h3>
+      <h3>Deleted Accounts: <%= BankAccount.where.not(discarded_at: nil).count %></h3><br>
+    <% else %>
+      <h3>Number of Accounts: <%= BankAccount.where(client_id: current_user.id).where(discarded_at: nil).pluck(:client_id).count   %></h3><br>
+    <% end %>
+  <%= link_to "Log Out", logout_path, :class => 'btn btn-primary btn-md'%>
+
 <% else %>
-<h1>ATM Cash Machine</h1>
+  <div class="jumbotron">
+    <h1>ATM CASH BANK</h1><br>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+    incididunt ut labore et dolore magna aliqua.</p><br>
+    <%= link_to "Sign up", signup_path, :class => 'btn btn-primary btn-lg'%> 
+    <%= link_to "Log in", login_path, :class => 'btn btn-default btn-lg'%> 
+  </div>
 <% end %>

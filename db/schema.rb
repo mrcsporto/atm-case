@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_27_191208) do
+ActiveRecord::Schema.define(version: 2022_11_29_211602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,16 +22,19 @@ ActiveRecord::Schema.define(version: 2022_11_27_191208) do
     t.bigint "bank_account_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "receiver_id"
     t.index ["bank_account_id"], name: "index_account_transactions_on_bank_account_id"
   end
 
   create_table "bank_accounts", force: :cascade do |t|
     t.bigint "client_id", null: false
-    t.decimal "balance"
+    t.decimal "balance", precision: 5, scale: 2
     t.string "account_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
     t.index ["client_id"], name: "index_bank_accounts_on_client_id"
+    t.index ["discarded_at"], name: "index_bank_accounts_on_discarded_at"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -41,6 +44,7 @@ ActiveRecord::Schema.define(version: 2022_11_27_191208) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "cpf"
+    t.string "role"
   end
 
   add_foreign_key "account_transactions", "bank_accounts"
