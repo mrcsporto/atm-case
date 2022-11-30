@@ -23,13 +23,6 @@
         <%= f.label :bank_account_id%>
         <%= f.select :bank_account_id, current_user.bank_accounts.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select your account"}, :class => 'form-control' %>
       </div>
-      
-      <% if :transaction_type == "Transfer" %>
-          <div class="field">
-            <%= f.label :receiver_id%>
-            <%= f.select :receiver_id, BankAccount.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select your account"}, :class => 'form-control' %>
-          </div>
-        <% end %>
       <div class="field">
         <%= f.label :amount %>
         <%= f.number_field :amount, step: 10.00, :class => 'form-control'%>
