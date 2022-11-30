@@ -12,22 +12,13 @@
         <th><%= model_class.human_attribute_name(:full_name) %></th>
         <th><%= model_class.human_attribute_name(:account_number) %></th>
         <th><%= model_class.human_attribute_name(:balance) %></th>
+         <% if current_user.role == "admin"  %>
+          <th>Deleted?</th>
+         <% end %>
         <th><%= model_class.human_attribute_name(:created_at) %></th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
-  <% else %>
-    <thead>
-        <tr>
-          <th><%= model_class.human_attribute_name(:client_number) %></th>
-          <th><%= model_class.human_attribute_name(:full_name) %></th>
-          <th><%= model_class.human_attribute_name(:account_number) %></th>
-          <th><%= model_class.human_attribute_name(:balance) %></th>
-          <th>Deleted?</th>
-          <th><%= model_class.human_attribute_name(:created_at) %></th>
-          <th><%=t '.actions', :default => t("helpers.actions") %></th>
-        </tr>
-      </thead>
   <% end %>
 
   <tbody>
@@ -38,6 +29,7 @@
           <td><%= bank_account.client.full_name %></td>
           <td><%= bank_account.account_number %></td>
           <td><strong>R$ <%= bank_account.balance %></strong></td>
+          <td><%= bank_account.discarded? ? '✔️' : '' %></td>
           <td><%=l bank_account.created_at %></td>
           <td>
             <%= link_to t('.show', :default => t("helpers.links.show")),
