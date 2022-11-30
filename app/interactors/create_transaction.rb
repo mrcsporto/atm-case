@@ -6,13 +6,13 @@ class CreateTransaction
     bank_account = BankAccount.find(context.params[:bank_account_id]).id
     amount = context.params[:amount].to_f
     balance = BankAccount.find(context.params[:bank_account_id]).balance.to_f
+    receiver_account = BankAccount.find(context.params[:receiver_id])
 
     context.account_transaction = AccountTransaction.create(context.params)
-
+# byebug
     if transaction_type == 'Transfer'
-      receiver_account = BankAccount.find(context.params[:receiver_id]).id
       BankAccount.update(bank_account, balance: balance - amount)
-      BankAccount.update(receiver_account, balance: balance + amount)
+      BankAccount.update(receiver_account.id, balance: receiver_account.balance.to_f + amount)
     else
       BankAccount.update(bank_account, balance: balance - amount) if transaction_type == 'Withdraw'
       BankAccount.update(bank_account, balance: balance + amount) if transaction_type == 'Deposit'
