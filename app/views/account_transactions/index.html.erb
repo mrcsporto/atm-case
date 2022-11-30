@@ -15,9 +15,9 @@
   </thead>
 
   <% AccountTransaction.all.each do |account_transaction| %>
-      <% if current_user.id == account_transaction.bank_account.client_id %>
+      <% if current_user.id == account_transaction.bank_account.client_id || current_user.role == 'admin' %>
             <tr>
-              <td><%= link_to account_transaction.id, account_transaction_path(account_transaction) %></td>
+              <td><%= account_transaction.id %></td>
               <td><%= account_transaction.transaction_type %></td>
               <td><%= account_transaction.bank_account.account_number %></td>
               <td><%= account_transaction.transaction_number %></td>
@@ -29,7 +29,9 @@
   <% end %>
 </table>
 <%= paginate @account_transactions %>
-<%= link_to t('.new', :default => t("helpers.links.new")),
+
+<% if current_user.role == 'client' %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
             new_account_transaction_path,
             :class => 'btn btn-primary' %>
-
+<% end %>

@@ -35,6 +35,8 @@
           <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
           <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
           account_transactions_path, :class => 'btn btn-default' %>  
-   <% end %>
+   <% else %>
+      <h2 style="color: red">Admin User cannot perform transactions in production environments</h2>
+    <% end %>
 <% end %>
 

@@ -1,19 +1,12 @@
 class AccountTransactionsController < ApplicationController
   before_action :set_account_transaction, only: %i[show edit update destroy]
-  before_action :set_bank_account, only: %i[show edit update destroy]
 
   def index
-    @bank_accounts = BankAccount.all
-    @account_transactions = AccountTransaction.all
+    @account_transactions = AccountTransaction.order(:created_at).page params[:page]
   end
 
   def new
     @account_transaction = AccountTransaction.new
-  end
-
-  def show
-    @account_transaction = AccountTransaction.find(account_transaction_params[:id])
-    @bank_account = BankAccount.find(account_transaction_params[:bank_account_id])
   end
 
   def create
@@ -26,14 +19,6 @@ class AccountTransactionsController < ApplicationController
   end
 
   private
-
-  def set_bank_account
-    if params[:bank_account_id]
-      BankAccount.find(params[:bank_account_id])
-    else
-      BankAccount.all
-    end
-  end
   
   # Use callbacks to share common setup or constraints between actions.
   def set_account_transaction
