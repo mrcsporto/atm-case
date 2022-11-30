@@ -1,20 +1,31 @@
-<%- model_class = AccountTransaction -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
+  <div class="page-header">
+    <h1>Account Transactions</h1>
+    <div class="row">
+        <div class="pull-right range-query">
+          <%= form_tag transactions_path, method: :get do %>
+            <%= text_field_tag 'search[date_from]', @search.date_from %>
+            <%= text_field_tag 'search[date_to]', @search.date_to %>
+            <%= submit_tag 'Search', class:'btn search-button' %>
+        <% end %>   
+      </div>
+    </div>
+  </div>
+
+  <%- model_class = AccountTransaction -%>
 <table class="table table-hover arrow">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:transaction_type) %></th>
-      <th><%= model_class.human_attribute_name(:account_number) %></th>
-      <th><%= model_class.human_attribute_name(:transaction_number) %></th>
-      <th><%= model_class.human_attribute_name(:amount) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>ID</th>
+      <th>Transaction type</th>
+      <th>Account number</th>
+      <th>Transaction number</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Time</th>
     </tr>
   </thead>
 
-  <% AccountTransaction.all.each do |account_transaction| %>
+  <% @account_transactions.each do |account_transaction| %>
       <% if current_user.id == account_transaction.bank_account.client_id || current_user.role == 'admin' %>
             <tr>
               <td><%= account_transaction.id %></td>
@@ -22,14 +33,15 @@
               <td><%= account_transaction.bank_account.account_number %></td>
               <td><%= account_transaction.transaction_number %></td>
               <td>R$ <%= account_transaction.amount %></td>
-              <td><%=l account_transaction.created_at %></td>
+              <td><%= account_transaction.created_at.strftime("%Y-%m-%d") %></td>
+              <td><%= account_transaction.created_at.strftime("%I:%M:%S") %></td>
             </tr>
         </tbody>
       <% end %>
   <% end %>
 </table>
-<%= paginate @account_transactions %>
 
+<%= paginate @account_transactions %>
 <% if current_user.role == 'client' %>
   <%= link_to t('.new', :default => t("helpers.links.new")),
             new_account_transaction_path,

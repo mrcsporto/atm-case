@@ -14,8 +14,8 @@ class AccountTransaction < ApplicationRecord
   before_save :upcase_transaction_type
   before_save :set_amount
 
-  paginates_per 5
-
+  paginates_per 10
+  
   def upcase_transaction_type
     self.transaction_type = transaction_type.upcase
   end

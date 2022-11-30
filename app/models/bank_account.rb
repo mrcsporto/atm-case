@@ -9,7 +9,7 @@ class BankAccount < ApplicationRecord
 
   before_validation :new_account
   
-  paginates_per 5
+  paginates_per 10
 
   include Discard::Model
 
