@@ -15,13 +15,13 @@
   </thead>
 
   <% AccountTransaction.all.each do |account_transaction| %>
-      <% if current_user.id === account_transaction.bank_account.client_id %>
+      <% if current_user.id == account_transaction.bank_account.client_id %>
             <tr>
               <td><%= link_to account_transaction.id, account_transaction_path(account_transaction) %></td>
               <td><%= account_transaction.transaction_type %></td>
               <td><%= account_transaction.bank_account.account_number %></td>
               <td><%= account_transaction.transaction_number %></td>
-              <td><%= account_transaction.amount %></td>
+              <td>R$ <%= account_transaction.amount %></td>
               <td><%=l account_transaction.created_at %></td>
             </tr>
         </tbody>

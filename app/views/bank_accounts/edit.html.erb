@@ -15,7 +15,7 @@
     </div>
   <% end %>
 
-  <% if current_user.role === "admin" %>
+  <% if current_user.role == "admin" %>
     <div class="field">
       <%= f.label :id%>
       <%= text_field_tag :full_name, @bank_account.client_id, disabled: true, :class => 'form-control' %>
@@ -40,7 +40,7 @@
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
       bank_accounts_path, :class => 'btn btn-default' %>
       
-  <% elsif current_user.id === @bank_account.client.id%>
+  <% elsif current_user.id == @bank_account.client.id%>
     <div class="field">
       <%= f.label :full_name%>
       <%= text_field_tag :full_name, @current_user.full_name, :class => 'form-control', disabled: true %>

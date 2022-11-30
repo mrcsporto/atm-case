@@ -3,7 +3,7 @@
   <h3>CPF: <%= current_user.cpf %></h3>
   <h3>Client Bank ID: <%= current_user.client_number %></h3><br>
 
-    <% if current_user.role === "admin" %>
+    <% if current_user.role == "admin" %>
       <h3>Active Client Accounts: <%= BankAccount.all.count %></h3>
       <h3>Deleted Accounts: <%= BankAccount.where.not(discarded_at: nil).count %></h3><br>
     <% else %>

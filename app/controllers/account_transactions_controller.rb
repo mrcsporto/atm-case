@@ -18,13 +18,18 @@ class AccountTransactionsController < ApplicationController
 
   def create
     account = BankAccount.find(account_transaction_params[:bank_account_id])
+    amount = account_transaction_params[:amount]
+    transaction_type = account_transaction_params[:transaction_type]
     @account_transaction = AccountTransaction.new(
-      amount: account_transaction_params[:amount],
-      transaction_type: account_transaction_params[:transaction_type],
+      amount: amount,
+      transaction_type: transaction_type,
       bank_account: account
     )
+    account.update(balance: account.balance - amount.to_f) if transaction_type.to_s == 'Withdraw'
+    account.update(balance: account.balance + amount.to_f) if transaction_type.to_s == 'Deposit'
+
     if @account_transaction.save
-      redirect_to transactions_path, notice: 'Bank account was successfully created.'
+      redirect_to transactions_path, notice: 'Transaction was successfully completed.'
     else
       render :new, status: :unprocessable_entity
     end

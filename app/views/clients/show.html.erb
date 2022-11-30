@@ -1,6 +1,6 @@
 <%- model_class = Client -%>
 <div class="page-header">
-<% if current_user.role === "admin" %>
+<% if current_user.role == "admin" %>
   <h1>Client Profiles</h1>
   <% else %>
   <h1>Client Profiles</h1>
@@ -19,7 +19,7 @@
     </div>
   <% end %>
 
-  <% if current_user.role === "admin" %>
+  <% if current_user.role == "admin" %>
     <table class="table table-hover arrow">
       <thead>
           <tr>
@@ -45,7 +45,7 @@
         </tbody>
     </table>
 
-  <% elsif current_user.role === "client"%>
+  <% elsif current_user.role == "client"%>
       <div class="field">
       <%= f.label :full_name%>
       <%= text_field_tag :full_name,current_user.full_name, disabled: true, :class => 'form-control' %>

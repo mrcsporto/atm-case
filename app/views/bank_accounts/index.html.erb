@@ -5,7 +5,7 @@
 <table class="table table-hover arrow">
  
 
-  <% if current_user.role === "client"  %>
+  <% if current_user.role == "client"  %>
     <thead>
       <tr>
         <th><%= model_class.human_attribute_name(:client_number) %></th>
@@ -32,12 +32,12 @@
 
   <tbody>
    <% @bank_accounts.each do |bank_account| %>
-    <% if current_user.id === bank_account.client.id %>
+    <% if current_user.id == bank_account.client.id %>
         <tr>
           <td><%= link_to bank_account.client.client_number, bank_account_path(bank_account) %></td>
           <td><%= bank_account.client.full_name %></td>
           <td><%= bank_account.account_number %></td>
-          <td><%= bank_account.balance %></td>
+          <td><strong>R$ <%= bank_account.balance %></strong></td>
           <td><%=l bank_account.created_at %></td>
           <td>
             <%= link_to t('.show', :default => t("helpers.links.show")),
@@ -52,13 +52,13 @@
           </td>
         </tr>
     </tbody>
-        <% elsif current_user.role === "admin"  %>
+        <% elsif current_user.role == "admin"  %>
       <tbody>
          <tr>
           <td><%= link_to bank_account.client.client_number, bank_account_path(bank_account) %></td>
           <td><%= bank_account.client.full_name %></td>
           <td><%= bank_account.account_number %></td>
-          <td><%= bank_account.balance %></td>
+          <td><strong> R$ <%= bank_account.balance %></strong></td>
           <td><%= bank_account.discarded? ? '✔️' : '' %></td>
           <td><%=l bank_account.created_at %></td>
           <td>

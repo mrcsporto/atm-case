@@ -6,7 +6,7 @@ class BankAccountsController < ApplicationController
   # GET /bank_accounts or /bank_accounts.json
   def index
     client = Client.find(session[:client_id]) if session[:client_id]
-      if client.role === 'admin'
+      if client.role == 'admin'
         @bank_accounts = BankAccount.all
       else
         @bank_accounts = BankAccount.kept
@@ -30,7 +30,7 @@ class BankAccountsController < ApplicationController
   # POST /bank_accounts or /bank_accounts.json
   def create
     client = Client.find(session[:client_id]) if session[:client_id]
-    if client.role === 'admin'
+    if client.role == 'admin'
       @bank_account = BankAccount.new(bank_account_params)
     else
       @bank_account = BankAccount.new(client_id: client.id)
