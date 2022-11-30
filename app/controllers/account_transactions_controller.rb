@@ -17,18 +17,8 @@ class AccountTransactionsController < ApplicationController
   end
 
   def create
-    account = BankAccount.find(account_transaction_params[:bank_account_id])
-    amount = account_transaction_params[:amount]
-    transaction_type = account_transaction_params[:transaction_type]
-    @account_transaction = AccountTransaction.new(
-      amount: amount,
-      transaction_type: transaction_type,
-      bank_account: account
-    )
-    account.update(balance: account.balance - amount.to_f) if transaction_type.to_s == 'Withdraw'
-    account.update(balance: account.balance + amount.to_f) if transaction_type.to_s == 'Deposit'
-
-    if @account_transaction.save
+    result = CreateTransaction.call(params: account_transaction_params)
+    if result.success?
       redirect_to transactions_path, notice: 'Transaction was successfully completed.'
     else
       render :new, status: :unprocessable_entity
@@ -52,6 +42,6 @@ class AccountTransactionsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def account_transaction_params
-    params.require(:account_transaction).permit(:transaction_type, :bank_account_id, :amount)
+    params.require(:account_transaction).permit(:transaction_type, :bank_account_id, :amount, :receipt_id)
   end
 end
