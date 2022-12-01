@@ -12,6 +12,13 @@ body {
   justify-content: space-between;
   height: 100vh;
 }
+
+.main.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .main {
   position: absolute;
   padding: 10rem 2rem;
@@ -184,7 +191,7 @@ label {
 }
 
 @media screen and (max-width:1000px) {
-  .main {
+  .container.main {
     padding: 10rem 2rem;
   }
 
