@@ -1,13 +1,12 @@
 class CreateTransaction
   include Interactor
 
-  byebug
   def call
     transaction_type = context.params[:transaction_type]
     bank_account = BankAccount.find(context.params[:bank_account_id])
     amount = context.params[:amount].to_f
     balance = BankAccount.find(context.params[:bank_account_id]).balance.to_f
-    
+
     context.account_transaction = AccountTransaction.create(context.params)
     
     if transaction_type == 'Transfer' && bank_account.balance - amount < 0.00
