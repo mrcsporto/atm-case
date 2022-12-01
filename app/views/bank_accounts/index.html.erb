@@ -27,7 +27,7 @@
         <% if current_user.role == "admin"  %>
           <td><%= bank_account.discarded? ? '✔️' : '' %></td>
         <% end %>
-        <td><%=l bank_account.created_at %></td>
+        <td><%= bank_account.created_at.to_s(:db) %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       bank_account_path(bank_account), :class => 'btn btn-default btn-xs' %>
@@ -49,7 +49,7 @@
         <td><%= bank_account.account_number %></td>
         <td><strong> R$ <%= bank_account.balance %></strong></td>
         <td><%= bank_account.discarded? ? '✔️' : '' %></td>
-        <td><%=l bank_account.created_at %></td>
+        <td><%= bank_account.created_at.to_s(:db) %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       bank_account_path(bank_account), :class => 'btn btn-default btn-xs' %>

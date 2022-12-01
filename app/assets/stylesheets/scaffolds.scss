@@ -157,7 +157,10 @@ label {
 
 @media screen and (max-width:750px) {
   .main {
-    padding: 2rem
+    position: relative;
+    padding: 2rem;
+    margin-top: 5rem;
+    top: -8rem
   }
 
   .well {

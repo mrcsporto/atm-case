@@ -33,8 +33,8 @@
               <td><%= account_transaction.bank_account.account_number %></td>
               <td><%= account_transaction.transaction_number %></td>
               <td>R$ <%= account_transaction.amount %></td>
-              <td><%= account_transaction.created_at.strftime("%Y-%m-%d") %></td>
-              <td><%= account_transaction.created_at.strftime("%I:%M:%S") %></td>
+              <td><%= account_transaction.created_at.to_s(:db).split(' ')[0] %></td>
+              <td><%= account_transaction.created_at.to_s(:db).split(' ')[1] %></td>
             </tr>
         </tbody>
       <% end %>
