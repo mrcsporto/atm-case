@@ -3,7 +3,7 @@
 This was the coolest app build I've ever done! I learned about:
 
 * Model Patterns
-* Manage Users Permision
+* Users Permisions
 * Authentication from Scratch
 
 ### Setup Versions
@@ -21,8 +21,6 @@ $ rails db:migrate
 ##### Populate database
 ```sh
 $ rails db:seed to create deafult Admin User
-  - Login: 42744555487
-  - Password: admin
 ```
 ### Features
 ```sh
