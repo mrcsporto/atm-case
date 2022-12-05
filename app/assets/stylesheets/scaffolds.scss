@@ -163,33 +163,6 @@ label {
   color: #fff;
 }
 
-.pagination>.active>a {
-  color: #fff;
-  background-color: rgba(33, 33, 33, 0.95);
-  border-color: #ccc;
-  cursor: pointer;
-}
-
-.pagination>.active>a:hover {
-  z-index: 2;
-  color: #fff;
-  background-color: rgba(33, 33, 33, 0.95);
-  border-color: #ccc;
-  cursor: pointer;
-}
-
-.pagination>li>a, .pagination>li>span {
-  position: relative;
-  float: left;
-  padding: 6px 12px;
-  line-height: 1.42857143;
-  text-decoration: none;
-  color: #666;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  margin-left: -1px;
-}
-
 @media screen and (max-width:1000px) {
   .container.main {
     padding: 10rem 2rem;
