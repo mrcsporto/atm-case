@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  auto_session_timeout 120.seconds
+  # auto_session_timeout 120.seconds
 
   private
 

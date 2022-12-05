@@ -7,7 +7,7 @@ class BankAccountsController < ApplicationController
     client = Client.find(session[:client_id]) if session[:client_id]
     @bank_accounts = BankAccount.all if client.role == 'admin'
     @bank_accounts = BankAccount.kept if client.role == 'client'
-    @bank_accounts = BankAccount.order(:id).page params[:page]
+    @bank_account = BankAccount.order(created_at: :desc).page params[:page]
   end
 
   def show
