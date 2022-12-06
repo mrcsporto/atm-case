@@ -1,12 +1,11 @@
 class BankAccountsController < ApplicationController
   before_action :set_bank_account, only: %i[show edit update destroy]
-  before_action :set_client, only: %i[show edit update destroy]
+  before_action :current_user, only: %i[index show create edit update destroy]
+  before_action :create_new_account, only: %i[create]
+  before_action :accounts_list, only: %i[index]
   before_action :authorize, expect: %i[show]
 
   def index
-    client = Client.find(session[:client_id]) if session[:client_id]
-    @bank_accounts = BankAccount.all.order(created_at: :desc).page params[:page] if client.role == 'admin'
-    @bank_accounts = BankAccount.kept.order(created_at: :desc).page params[:page] if client.role == 'client'
   end
 
   def show
@@ -18,9 +17,6 @@ class BankAccountsController < ApplicationController
   end
 
   def create
-    client = Client.find(session[:client_id]) if session[:client_id]
-    @bank_account = BankAccount.new(bank_account_params) if client.role == 'admin'
-    @bank_account = BankAccount.new(client_id: client.id) if client.role == 'client'
     if @bank_account.save
       redirect_to bank_account_url(@bank_account), notice: 'Bank account was successfully created.'
     else
@@ -42,13 +38,14 @@ class BankAccountsController < ApplicationController
   end
 
   private
+  def accounts_list
+    @bank_accounts = BankAccount.all.order(created_at: :desc).page params[:page] if @current_user.role == 'admin'
+    @bank_accounts = BankAccount.kept.order(created_at: :desc).page params[:page] if @current_user.role == 'client'
+  end
 
-  def set_client
-    if params[:client_id]
-      Client.find(params[:client_id])
-    else
-      Client.all
-    end
+  def create_new_account
+    @bank_account = BankAccount.new(bank_account_params) if @current_user.role == 'admin'
+    @bank_account = BankAccount.new(client_id: @current_user.id) if @current_user.role == 'client'
   end
 
   def set_bank_account

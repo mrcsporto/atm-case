@@ -1,7 +1,8 @@
+<div class="login-container">
 <h1>Log In</h1>
-
+<div class="jumbotron login">
 <%= form_tag sessions_path do %>
-  <div class="field">
+  <div class="field " >
     <label>CPF</label>
     <%= text_field_tag :cpf, params[:cpf], autofocus: true %>
   </div>
@@ -11,3 +12,5 @@
   </div>
   <div class="actions"><%= submit_tag "Log In" %></div>
 <% end %>
+</div>
+</div>
