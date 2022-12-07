@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= Client.find(session[:client_id]) if session[:client_id]
-    # @current_user = Client.find(session[:client_id]) if session[:client_id]
   end
 
   def authorize

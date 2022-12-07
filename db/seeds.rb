@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Client.delete_all
-Client.create!(
+Client.create(
   full_name: "admin", cpf:"42744555487", password: "admin", 
   password_confirmation: "admin", role:"admin"
 )
