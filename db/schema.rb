@@ -10,43 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_29_211602) do
-
+ActiveRecord::Schema.define(version: 20_221_129_211_602) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "account_transactions", force: :cascade do |t|
-    t.decimal "amount"
-    t.string "transaction_type"
-    t.string "transaction_number"
-    t.bigint "bank_account_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "receiver_id"
-    t.index ["bank_account_id"], name: "index_account_transactions_on_bank_account_id"
+  create_table 'account_transactions', force: :cascade do |t|
+    t.decimal 'amount'
+    t.string 'transaction_type'
+    t.string 'transaction_number'
+    t.bigint 'bank_account_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.string 'receiver_id'
+    t.index ['bank_account_id'], name: 'index_account_transactions_on_bank_account_id'
   end
 
-  create_table "bank_accounts", force: :cascade do |t|
-    t.bigint "client_id", null: false
-    t.decimal "balance", precision: 10, scale: 2
-    t.string "account_number"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "discarded_at"
-    t.index ["client_id"], name: "index_bank_accounts_on_client_id"
-    t.index ["discarded_at"], name: "index_bank_accounts_on_discarded_at"
+  create_table 'bank_accounts', force: :cascade do |t|
+    t.bigint 'client_id', null: false
+    t.decimal 'balance', precision: 10, scale: 2
+    t.string 'account_number'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.datetime 'discarded_at'
+    t.index ['client_id'], name: 'index_bank_accounts_on_client_id'
+    t.index ['discarded_at'], name: 'index_bank_accounts_on_discarded_at'
   end
 
-  create_table "clients", force: :cascade do |t|
-    t.string "full_name"
-    t.string "client_number"
-    t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "cpf"
-    t.string "role"
+  create_table 'clients', force: :cascade do |t|
+    t.string 'full_name'
+    t.string 'client_number'
+    t.string 'password_digest'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.string 'cpf'
+    t.string 'role'
   end
 
-  add_foreign_key "account_transactions", "bank_accounts"
-  add_foreign_key "bank_accounts", "clients"
+  add_foreign_key 'account_transactions', 'bank_accounts'
+  add_foreign_key 'bank_accounts', 'clients'
 end

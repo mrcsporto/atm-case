@@ -13,10 +13,15 @@ class AccountTransactionsController < ApplicationController
   def create
     result = CreateTransaction.call(params: account_transaction_params)
     if result.success?
-      redirect_to transactions_path, notice: 'Transaction was successfully completed.'
+      redirect_to result.account_transaction, notice: 'Transaction was successfully completed.'
     else
-      render :new, status: :unprocessable_entity
+      @account_transaction = result.account_transaction
+      redirect_to new_account_transaction_url, alert: "Not enouth funds"
     end
+  end
+
+  def show
+    @account_transaction = AccountTransaction.find(params[:id])
   end
 
   private
