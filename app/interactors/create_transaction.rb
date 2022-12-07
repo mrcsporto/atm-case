@@ -8,7 +8,7 @@ class CreateTransaction
     balance = BankAccount.find(context.params[:bank_account_id]).balance.to_f
 
     context.account_transaction = AccountTransaction.create(context.params)
-    
+
     if transaction_type == 'Transfer' && bank_account.balance - amount < 0.00
       receiver_account = BankAccount.find(context.params[:receiver_id])
       BankAccount.update(bank_account.id, balance: balance - amount)
@@ -18,8 +18,4 @@ class CreateTransaction
       BankAccount.update(bank_account.id, balance: balance + amount) if transaction_type == 'Deposit'
     end
   end
-
- 
 end
-
-

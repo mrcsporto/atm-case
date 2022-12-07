@@ -4,8 +4,7 @@ class AccountTransaction < ApplicationRecord
   TRANSACTION_TYPES = %i[Transfer Withdraw Deposit]
 
   validates :bank_account, presence: true
-  validates :amount, presence: true, numericality: { greater_than: 0, less_than: BigDecimal(10**3) },
-                     format: { with: /\A\d{1,3}(\.\d{1,2})?\z/ }
+  validates :amount, presence: true, numericality: { greater_than: 0 }
   validates :transaction_type, presence: true, inclusion: { in: TRANSACTION_TYPES }
   validates :transaction_number, presence: true, uniqueness: true
   # validates :receiver_id, presence: true, if: -> { (transaction_type.eql? 'Transfer') }
@@ -21,7 +20,7 @@ class AccountTransaction < ApplicationRecord
   end
 
   def set_amount
-    self.amount.to_f
+    amount.to_f
   end
 
   def transaction_uniq_id

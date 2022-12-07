@@ -4,8 +4,7 @@ class BankAccount < ApplicationRecord
 
   validates :client, presence: true
   validates :account_number, presence: true, uniqueness: true, length: { is: 6 }
-  validates :balance, presence: true, numericality: { greater_than_or_equal_to: 0, less_than: BigDecimal(10**3) },
-                      format: { with: /\A\d{1,3}(\.\d{1,2})?\z/ }
+  validates :balance, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   before_validation :new_account
   

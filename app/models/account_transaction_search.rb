@@ -3,8 +3,8 @@ class AccountTransactionSearch
 
   def initialize(params)
     params ||= {}
-    @date_from = parsed_date(params[:date_from], 7.days.ago.to_s(:db).split(' ')[0])
-    @date_to = parsed_date(params[:date_to], Date.today.to_s(:db).split(' ')[0])
+    @date_from = parsed_date(params[:date_from], Date.today - 7.days)
+    @date_to = parsed_date(params[:date_to], Date.today + 1.day)
   end
 
   def scope
