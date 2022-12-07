@@ -1,7 +1,7 @@
 class AccountTransaction < ApplicationRecord
   belongs_to :bank_account
 
-  TRANSACTION_TYPES = %w[Transfer Withdraw Deposit]
+  TRANSACTION_TYPES = %i[Transfer Withdraw Deposit]
 
   validates :bank_account, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0, less_than: BigDecimal(10**3) },
@@ -14,8 +14,8 @@ class AccountTransaction < ApplicationRecord
   before_save :upcase_transaction_type
   before_save :set_amount
 
-  paginates_per 10
-  
+  paginates_per 8
+
   def upcase_transaction_type
     self.transaction_type = transaction_type.upcase
   end
@@ -27,5 +27,4 @@ class AccountTransaction < ApplicationRecord
   def transaction_uniq_id
     self.transaction_number = SecureRandom.uuid if new_record?
   end
-
 end

@@ -4,8 +4,8 @@ class AccountTransactionsController < ApplicationController
   def index
     @account_transactions = AccountTransaction.all
     @search = AccountTransactionSearch.new(params[:search])
-    @account_transactions = @search.scope
-    @account_transactions = AccountTransaction.order(created_at: :desc).page params[:page]
+    @account_transactions = @search.scope.order(created_at: :desc).page params[:page]
+    # @account_transactions = AccountTransaction.all.order(created_at: :desc).page params[:page]
   end
 
   def new
