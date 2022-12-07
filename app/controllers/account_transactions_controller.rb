@@ -2,10 +2,8 @@ class AccountTransactionsController < ApplicationController
   before_action :set_account_transaction, only: %i[show edit update destroy]
 
   def index
-    @account_transactions = AccountTransaction.all
     @search = AccountTransactionSearch.new(params[:search])
     @account_transactions = @search.scope.order(created_at: :desc).page params[:page]
-    # @account_transactions = AccountTransaction.all.order(created_at: :desc).page params[:page]
   end
 
   def new
