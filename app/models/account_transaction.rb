@@ -1,7 +1,7 @@
 class AccountTransaction < ApplicationRecord
   belongs_to :bank_account
 
-  TRANSACTION_TYPES = %i[Transfer Withdraw Deposit]
+  TRANSACTION_TYPES = %w[Transfer Withdraw Deposit]
 
   validates :bank_account, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
