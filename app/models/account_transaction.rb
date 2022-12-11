@@ -7,7 +7,7 @@ class AccountTransaction < ApplicationRecord
   validates :amount, presence: true, numericality: { greater_than: 0 }
   validates :transaction_type, presence: true, inclusion: { in: TRANSACTION_TYPES }
   validates :transaction_number, presence: true, uniqueness: true
-  # validates :receiver_id, presence: true, if: -> { (transaction_type.eql? 'Transfer') }
+  # validates :receiver_id, presence: true, if: -> { (transaction_type.eql? 'TRANSFER') }
 
   before_validation :transaction_uniq_id
   before_save :upcase_transaction_type
