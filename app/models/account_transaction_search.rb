@@ -2,13 +2,13 @@ class AccountTransactionSearch
   attr_reader :date_from, :date_to
 
   def initialize(params)
-    params ||= {  }
-    @date_from = parsed_date(params[:date_from], 7.days.ago.to_s(:db).split(' ')[0]  )
-    @date_to = parsed_date(params[:date_to], Date.today.to_s(:db).split(' ')[0]  )
+    params ||= {}
+    @date_from = parsed_date(params[:date_from], Date.today - 7.days)
+    @date_to = parsed_date(params[:date_to], Date.today)
   end
 
   def scope
-    AccountTransaction.where('created_at BETWEEN ? AND ?', @date_from, @date_to)
+    AccountTransaction.where('created_at >= ? AND created_at < ?', @date_from, @date_to + 1.day)
   end
 
   private
@@ -18,5 +18,4 @@ class AccountTransactionSearch
   rescue ArgumentError, TypeError
     default
   end
-
 end

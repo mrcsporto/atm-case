@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2022_11_29_211602) do
 
   create_table "bank_accounts", force: :cascade do |t|
     t.bigint "client_id", null: false
-    t.decimal "balance", precision: 5, scale: 2
+    t.decimal "balance", precision: 10, scale: 2
     t.string "account_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

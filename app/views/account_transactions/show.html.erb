@@ -1,0 +1,28 @@
+<%- model_class = AccountTransaction -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+<% if current_user.id == @account_transaction.bank_account.client_id || current_user.role == 'admin' %>
+  <dl class="dl-horizontal">
+    <dt><strong><%= model_class.human_attribute_name (:id) %>:</strong></dt>
+    <dd><%= @account_transaction.id %></dd>
+    <dt><strong><%= model_class.human_attribute_name (:transaction_type) %>:</strong></dt>
+    <dd><%= @account_transaction.transaction_type %></dd>
+    <dt><strong><%= model_class.human_attribute_name (:account_number) %>:</strong></dt>
+    <dd><%= @account_transaction.bank_account.account_number %></dd>
+    <% if @account_transaction.transaction_type == 'TRANSFER' %>
+      <dt><strong><%= model_class.human_attribute_name (:receiver_id) %>:</strong></dt>
+      <dd><%= BankAccount.find(@account_transaction.receiver_id).account_number %></dd>
+    <% end %>
+    <dt><strong><%= model_class.human_attribute_name (:transaction_number) %>:</strong></dt>
+    <dd><%= @account_transaction.transaction_number %></dd>
+    <dt><strong><%= model_class.human_attribute_name (:amount) %>:</strong></dt>
+    <dd><%= @account_transaction.amount %></dd>
+    <dt><strong><%= model_class.human_attribute_name (:created_at) %>:</strong></dt>
+    <dd><%= @account_transaction.created_at %></dd>
+  </dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              account_transactions_path, :class => 'btn btn-default'  %>
+
+<% end %>

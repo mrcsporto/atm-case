@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_action :authorize, only: %i[ show edit update destroy ]
+  before_action :authorize, only: %i[show edit update destroy]
 
   def new
     @client = Client.new
