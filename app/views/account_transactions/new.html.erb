@@ -17,26 +17,42 @@
      <% if current_user.role == "client"  %>
       <div class="field">
         <%= f.label :transaction_type%>
-        <%= f.select :transaction_type, AccountTransaction::TRANSACTION_TYPES, {:include_blank => "Select Transaction"}, :class => 'form-control' %>
+        <%= f.select :transaction_type, AccountTransaction::TRANSACTION_TYPES, {:include_blank => "Select Transaction"}, :class => 'form-control', :id => 'selectedTransaction', :onchange => 'setSelectedTransaction()' %>
+        <p id="showTransactionType"></p>
+       
       </div>
       <div class="field">
         <%= f.label :bank_account_id%>
         <%= f.select :bank_account_id, current_user.bank_accounts.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select your account"}, :class => 'form-control' %>
       </div>
-      <div class="field">
+
+      <div class="field" id='event_blk'>
         <%= f.label :receiver_id%>
         <%= f.select :receiver_id, BankAccount.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select an account you want transfer"}, :class => 'form-control' %>
       </div>
+
       <div class="field">
         <%= f.label :amount %>
         <%= f.number_field :amount, step: 0.01, :class => 'form-control'%>
       </div>
   
-          <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
-          <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-          account_transactions_path, :class => 'btn btn-default' %>  
+      <%= f.submit nil, :class => 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+      account_transactions_path, :class => 'btn btn-default' %>  
    <% else %>
       <h2 style="color: red">Admin User cannot perform transactions in production environments</h2>
     <% end %>
 <% end %>
 
+
+<script>
+  function setSelectedTransaction() {
+    let trasactionType = document.getElementById("selectedTransaction").value;
+    
+    if (trasactionType == "Transfer"){
+        document.getElementById("event_blk").style.display = "block";
+    } else {
+        document.getElementById("event_blk").style.display = "none";
+    }
+  }
+</script>
