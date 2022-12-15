@@ -26,9 +26,9 @@
         <%= f.select :bank_account_id, current_user.bank_accounts.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select your account"}, :class => 'form-control' %>
       </div>
 
-      <div class="field" id='event_blk'>
+      <div class="field" >
         <%= f.label :receiver_id%>
-        <%= f.select :receiver_id, BankAccount.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select an account you want transfer"}, :class => 'form-control' %>
+        <%= f.select :receiver_id, BankAccount.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select an account you want transfer"}, :class => 'form-control', id: 'event_blk' %>
       </div>
 
       <div class="field">
@@ -50,9 +50,9 @@
     let trasactionType = document.getElementById("selectedTransaction").value;
     
     if (trasactionType == "Transfer"){
-        document.getElementById("event_blk").style.display = "block";
+        $('#event_blk').removeAttr('disabled'); //Enable
     } else {
-        document.getElementById("event_blk").style.display = "none";
+        $('#event_blk').attr('disabled', 'disabled');
     }
   }
 </script>
