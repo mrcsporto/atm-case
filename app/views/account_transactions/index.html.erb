@@ -1,17 +1,17 @@
-  <div class="page-header">
-    <h1>Account Transactions</h1>
-    <div class="row">
-        <div class="pull-right range-query">
-          <%= form_tag transactions_path, method: :get do %>
-            <%= text_field_tag 'search[date_from]', @search.date_from %>
-            <%= text_field_tag 'search[date_to]', @search.date_to %>
-            <%= submit_tag 'Search', class:'btn search-button' %>
-        <% end %>   
-      </div>
+<div class="page-header">
+  <h1>Account Transactions</h1>
+  <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag transactions_path, method: :get do %>
+          <%= text_field_tag 'search[date_from]', @search.date_from %>
+          <%= text_field_tag 'search[date_to]', @search.date_to %>
+          <%= submit_tag 'Search', class:'btn search-button' %>
+      <% end %>   
     </div>
   </div>
+</div>
 
-  <%- model_class = AccountTransaction -%>
+<%- model_class = AccountTransaction -%>
 <table class="table table-hover arrow">
   <thead>
     <tr>
@@ -26,24 +26,27 @@
     </tr>
   </thead>
 
-  <% @account_transactions.each do |account_transaction| %>
-      <% if current_user.id == account_transaction.bank_account.client_id || current_user.role == 'admin' %>
-            <tr>
-              <td><%= link_to account_transaction.id, account_transaction_path(account_transaction) %></td>
-              <td><%= account_transaction.transaction_type %></td>
-              <td><%= account_transaction.bank_account.account_number %></td>
-                <% if account_transaction.transaction_type == 'TRANSFER' && account_transaction.receiver_id.to_i != 0 %>
-                  <td><%= BankAccount.find(account_transaction.receiver_id.to_i).account_number %></td>
-                <% else %>
-                  <td>---</td>
-                <% end %>
-              <td><%= account_transaction.transaction_number %></td>
-              <td>R$ <%= account_transaction.amount %></td>
-              <td><%= account_transaction.created_at.to_s(:db).split(' ')[0] %></td>
-              <td><%= account_transaction.created_at.to_formatted_s(:short).split(' ')[2] %></td>
-            </tr>
-        </tbody>
-      <% end %>
+<% @account_transactions.each do |account_transaction| %>
+    <% if current_user.id == account_transaction.bank_account.client_id 
+        || current_user.role == 'admin' 
+        || current_user.bank_accounts.ids.include?(account_transaction[:receiver_id].to_i) %>
+      <tr>
+        <td><%= link_to account_transaction.id, account_transaction_path(account_transaction) %></td>
+        <td><%= account_transaction.transaction_type %></td>
+        <td><%= account_transaction.bank_account.account_number %></td>
+          <% if account_transaction.transaction_type == 'TRANSFER' 
+              && account_transaction.receiver_id.to_i != 0 %>
+            <td><%= BankAccount.find(account_transaction.receiver_id.to_i).account_number %></td>
+          <% else %>
+            <td>---</td>
+          <% end %>
+        <td><%= account_transaction.transaction_number %></td>
+        <td>R$ <%= account_transaction.amount %></td>
+        <td><%= account_transaction.created_at.to_s(:db).split(' ')[0] %></td>
+        <td><%= account_transaction.created_at.to_formatted_s(:short).split(' ')[2] %></td>
+      </tr>
+  </tbody>
+    <% end %>
   <% end %>
 </table>
 

@@ -7,10 +7,9 @@ class AccountTransaction < ApplicationRecord
   validates :amount, presence: true, numericality: { greater_than: 0 }
   validates :transaction_type, presence: true, inclusion: { in: TRANSACTION_TYPES }
   validates :transaction_number, presence: true, uniqueness: true
-  # validates :receiver_id, presence: true, if: -> { (transaction_type.eql? 'TRANSFER') }
+  validates :receiver_id, presence: true, if: -> { (transaction_type.eql? 'Transfer') }
 
   before_validation :transaction_uniq_id
-  # before_validation :transfer_accounts
   before_save :upcase_transaction_type
   before_save :set_amount
 
@@ -28,9 +27,4 @@ class AccountTransaction < ApplicationRecord
     self.transaction_number = SecureRandom.uuid if new_record?
   end
 
-  # def transfer_accounts
-  #   @all_bank_accounts = BankAccount.where(discarded_at: nil).pluck(:account_number).sort
-  #   # current_user_accounts = @current_user.bank_accounts.pluck(:account_number)
-  #   # @receivers_accounts = all_bank_accounts - current_user_accounts
-  # end
 end
