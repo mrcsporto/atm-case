@@ -23,12 +23,12 @@
       </div>
       <div class="field">
         <%= f.label :bank_account_id%>
-        <%= f.select :bank_account_id, current_user.bank_accounts.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select your account"}, :class => 'form-control' %>
+        <%= f.select :bank_account_id, current_user_accounts, {:include_blank => "Select your account"}, :class => 'form-control' %>
       </div>
 
       <div class="field" >
         <%= f.label :receiver_id%>
-        <%= f.select :receiver_id, BankAccount.where(discarded_at: nil).pluck(:account_number, :id).sort, {:include_blank => "Select an account you want transfer"}, :class => 'form-control', id: 'event_blk' %>
+        <%= f.select :receiver_id, transfer_accounts, {:include_blank => "Select an account you want transfer"}, :class => 'form-control', id: 'event_blk' %>
       </div>
 
       <div class="field">
@@ -49,10 +49,10 @@
   function setSelectedTransaction() {
     let trasactionType = document.getElementById("selectedTransaction").value;
     
-    if (trasactionType == "Transfer"){
-        $('#event_blk').removeAttr('disabled'); //Enable
+    if (trasactionType !== "Transfer" || trasactionType == null ){
+      $('#event_blk').attr('disabled', 'disabled');
     } else {
-        $('#event_blk').attr('disabled', 'disabled');
+      $('#event_blk').removeAttr('disabled');
     }
   }
 </script>
