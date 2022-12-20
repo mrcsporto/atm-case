@@ -33,7 +33,7 @@ class BankAccountsController < ApplicationController
   end
 
   def destroy
-    if @bank_account.balance > 0
+    if @bank_account.balance.positive?
       redirect_to bank_accounts_url, alert: 'You can not delete a bank account with an balance'
     else
       @bank_account.discard
