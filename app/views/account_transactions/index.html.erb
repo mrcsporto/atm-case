@@ -58,6 +58,7 @@
   </div>
 
   <%= paginate @account_transactions %>
+  <br>
   <% if current_user.role == 'client' %>
     <%= link_to t('.new', :default => t("helpers.links.new")),
               new_account_transaction_path,
