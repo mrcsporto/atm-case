@@ -14,11 +14,6 @@ body {
 }
 
 .main {
-  // display: flex;
-  // justify-content: center;
-  // align-items: flex-start;
-  // padding: 0 5rem 5rem 5rem;
-  // text-align: start;
   height: 100%;
 }
 
@@ -160,6 +155,12 @@ label {
 
 @media screen and (max-width:1000px) {
   .well {
-    padding: 2px;;
-  }
+    padding: 2px;
+  }  
+}
+
+@media screen and (max-width:450px) {
+  .main {
+    height: -webkit-fill-available;
+  } 
 }
