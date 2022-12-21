@@ -10,53 +10,51 @@
       </div>
   </div>
 
-  <div class="row container table-responsive table-test">
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered table-condensed table-hover arrow">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Transaction type</th>
-            <th>Account Number</th>
-            <th>Receiver Account</th>
-            <th>Amount</th>
-            <th>Transaction number</th>
-            <th>Date</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @account_transactions.each do |account_transaction| %>
-            <% if current_user.id == account_transaction.bank_account.client_id || 
-                  current_user.role == 'admin' || 
-                  current_user.bank_accounts.ids.include?(account_transaction[:receiver_id].to_i) 
-                %>
-              <tr>
-                <td><strong><%= link_to account_transaction.id, account_transaction_path(account_transaction)%></strong></td>
-                <td><%= account_transaction.transaction_type %></td>
-                <td><%= account_transaction.bank_account.account_number %></td>
-                  <% if account_transaction.transaction_type == 'TRANSFER' %>
-                    <td><%= BankAccount.find(account_transaction.receiver_id.to_i).account_number %></td>
-                  <% else %>
-                    <td>---</td>
-                  <% end %>
-                  <% if current_user.id == account_transaction.bank_account.client_id &&
-                        account_transaction.transaction_type == 'TRANSFER' || 
-                        account_transaction.transaction_type == 'WITHDRAW' 
-                      %>
-                    <td style="color: red;">- R$<%= account_transaction.amount %></td>
-                  <% else %>
-                    <td style="color: green;">+ R$<%= account_transaction.amount %></td>
-                  <% end %>
-                <td><%= account_transaction.transaction_number %></td>
-                <td><%= account_transaction.created_at.to_s(:db).split(' ')[0] %></td>
-                <td><%= account_transaction.created_at.to_formatted_s(:short).split(' ')[2] %></td>
-              </tr>
-            <% end %>
+  <div class="row container-fluid table-responsive table-mobile text-center">
+    <table class="table table-striped table-bordered table-condensed table-hover arrow">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Transaction type</th>
+          <th>Account Number</th>
+          <th>Receiver Account</th>
+          <th>Amount</th>
+          <th>Transaction number</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @account_transactions.each do |account_transaction| %>
+          <% if current_user.id == account_transaction.bank_account.client_id || 
+                current_user.role == 'admin' || 
+                current_user.bank_accounts.ids.include?(account_transaction[:receiver_id].to_i) 
+              %>
+            <tr>
+              <td><strong><%= link_to account_transaction.id, account_transaction_path(account_transaction)%></strong></td>
+              <td><%= account_transaction.transaction_type %></td>
+              <td><%= account_transaction.bank_account.account_number %></td>
+                <% if account_transaction.transaction_type == 'TRANSFER' %>
+                  <td><%= BankAccount.find(account_transaction.receiver_id.to_i).account_number %></td>
+                <% else %>
+                  <td>---</td>
+                <% end %>
+                <% if current_user.id == account_transaction.bank_account.client_id &&
+                      account_transaction.transaction_type == 'TRANSFER' || 
+                      account_transaction.transaction_type == 'WITHDRAW' 
+                    %>
+                  <td style="color: red;">- R$<%= account_transaction.amount %></td>
+                <% else %>
+                  <td style="color: green;">+ R$<%= account_transaction.amount %></td>
+                <% end %>
+              <td><%= account_transaction.transaction_number %></td>
+              <td><%= account_transaction.created_at.to_s(:db).split(' ')[0] %></td>
+              <td><%= account_transaction.created_at.to_formatted_s(:short).split(' ')[2] %></td>
+            </tr>
           <% end %>
-        </tbody>
-      </table>
-    </div>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 
   <%= paginate @account_transactions %>
